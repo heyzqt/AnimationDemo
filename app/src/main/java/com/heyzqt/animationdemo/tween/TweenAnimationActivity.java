@@ -1,11 +1,14 @@
 package com.heyzqt.animationdemo.tween;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
@@ -20,24 +23,33 @@ import com.heyzqt.animationdemo.R;
 
 public class TweenAnimationActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Context context;
+
     private ImageView mLauncherView;
     private Button mAlphaButton;
     private Button mTranslateButton;
     private Button mScaleButton;
     private Button mRotateButton;
+    private Button mAnimationSetButton;
+    private Button mXMLAnimationButton;
 
     private AlphaAnimation mAlphaAnimation;
     private TranslateAnimation mTranslateAnimation;
     private ScaleAnimation mScaleAnimation;
     private RotateAnimation mRotateAnimation;
+    private AnimationSet mAnimationSet;
+    private Animation mXMLAnimation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tween);
 
+        context = this;
         initContentView();
         initBasicAnim();
+        initAnimationSet();
+        initXMLAnimation();
     }
 
     private void initContentView() {
@@ -46,11 +58,15 @@ public class TweenAnimationActivity extends AppCompatActivity implements View.On
         mTranslateButton = findViewById(R.id.translate_button);
         mScaleButton = findViewById(R.id.scale_button);
         mRotateButton = findViewById(R.id.rotate_button);
+        mAnimationSetButton = findViewById(R.id.animationset_button);
+        mXMLAnimationButton = findViewById(R.id.xmlanim_button);
 
         mAlphaButton.setOnClickListener(this);
         mTranslateButton.setOnClickListener(this);
         mScaleButton.setOnClickListener(this);
         mRotateButton.setOnClickListener(this);
+        mAnimationSetButton.setOnClickListener(this);
+        mXMLAnimationButton.setOnClickListener(this);
     }
 
     private void initBasicAnim() {
@@ -75,6 +91,18 @@ public class TweenAnimationActivity extends AppCompatActivity implements View.On
         mRotateAnimation.setDuration(2000);
     }
 
+    private void initAnimationSet() {
+        mAnimationSet = new AnimationSet(true);
+        mAnimationSet.addAnimation(mAlphaAnimation);
+        mAnimationSet.addAnimation(mTranslateAnimation);
+        mAnimationSet.addAnimation(mScaleAnimation);
+        mAnimationSet.addAnimation(mRotateAnimation);
+    }
+
+    private void initXMLAnimation() {
+        mXMLAnimation = AnimationUtils.loadAnimation(context, R.anim.view_animation);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -89,6 +117,12 @@ public class TweenAnimationActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.rotate_button:
                 mLauncherView.startAnimation(mRotateAnimation);
+                break;
+            case R.id.animationset_button:
+                mLauncherView.startAnimation(mAnimationSet);
+                break;
+            case R.id.xmlanim_button:
+                mLauncherView.startAnimation(mXMLAnimation);
                 break;
         }
     }

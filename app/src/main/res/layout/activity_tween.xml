@@ -40,4 +40,20 @@
         android:layout_marginTop="5dp"
         android:text="播放旋转动画" />
 
+    <Button
+        android:id="@+id/animationset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rotate_button"
+        android:layout_marginTop="5dp"
+        android:text="播放组合动画animationset" />
+
+    <Button
+        android:id="@+id/xmlanim_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/animationset_button"
+        android:layout_marginTop="5dp"
+        android:text="播放组合动画XML" />
+
 </RelativeLayout>
